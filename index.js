@@ -7,9 +7,21 @@ const port = 3000;
 
 // Create the server
 const server = http.createServer((req, res) => {
-  res.statusCode = 200;               // Set status code to 200 OK
+  // Set default header to plain text
   res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello, world!\n');         // Send response
+
+  // Routing logic
+  if (req.url === '/test' && req.method === 'GET') {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({ message: 'Test API working!' }));
+  } else if (req.url === '/' && req.method === 'GET') {
+    res.statusCode = 200;
+    res.end('Hello, world!\n');
+  } else {
+    res.statusCode = 404;
+    res.end('404 Not Found\n');
+  }
 });
 
 // Start the server
